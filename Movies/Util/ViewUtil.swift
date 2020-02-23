@@ -7,3 +7,16 @@
 //
 
 import Foundation
+import UIKit
+
+struct ViewUtil {
+    
+    static func prepareWindow(window: UIWindow?) {
+        let _window = window ?? UIWindow()
+        let navigationViewController = UINavigationController()
+        let movieViewController = MovieViewController()
+        navigationViewController.viewControllers.append(movieViewController)
+        _window.rootViewController = navigationViewController
+        _window.makeKeyAndVisible()
+    }
+}
