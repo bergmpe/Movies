@@ -67,7 +67,7 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CatalogoCollectionViewCell", for: indexPath) as? MovieCollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell {
             let url = URL(string: "https://image.tmdb.org/t/p/" + "w185" + (movies[indexPath.row].poster_path ?? ""))
             cell.movieImageView.load(url: url!)
             cell.config(movie: movies[indexPath.row])
