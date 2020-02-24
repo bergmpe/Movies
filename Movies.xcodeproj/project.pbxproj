@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		972069672402A2A1004AEDE1 /* MovieImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972069662402A2A1004AEDE1 /* MovieImageRepository.swift */; };
 		972069692402A395004AEDE1 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972069682402A395004AEDE1 /* Repository.swift */; };
 		9720696B2402B1F1004AEDE1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9720696A2402B1F1004AEDE1 /* Extensions.swift */; };
 		9746FCD32400716D00502F3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9746FCD22400716D00502F3E /* AppDelegate.swift */; };
@@ -44,7 +43,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		972069662402A2A1004AEDE1 /* MovieImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieImageRepository.swift; sourceTree = "<group>"; };
 		972069682402A395004AEDE1 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		9720696A2402B1F1004AEDE1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9746FCCF2400716D00502F3E /* Movies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movies.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,7 +169,6 @@
 			isa = PBXGroup;
 			children = (
 				9746FD08240076B900502F3E /* MovieRepository.swift */,
-				972069662402A2A1004AEDE1 /* MovieImageRepository.swift */,
 				972069682402A395004AEDE1 /* Repository.swift */,
 			);
 			path = Repository;
@@ -331,7 +328,6 @@
 				9746FCD32400716D00502F3E /* AppDelegate.swift in Sources */,
 				9746FD112401579B00502F3E /* MovieViewModel.swift in Sources */,
 				9746FD0B2400989000502F3E /* Movie.swift in Sources */,
-				972069672402A2A1004AEDE1 /* MovieImageRepository.swift in Sources */,
 				9746FD09240076B900502F3E /* MovieRepository.swift in Sources */,
 				9720696B2402B1F1004AEDE1 /* Extensions.swift in Sources */,
 				9746FD152402087300502F3E /* MovieColletionViewCell.swift in Sources */,

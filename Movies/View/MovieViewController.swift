@@ -38,13 +38,6 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
         return obj
     }()
     
-//    lazy var refreshControle: UIRefreshControl = { [weak self] in
-//        guard let me = self else { return UIRefreshControl() }
-//        let obj = UIRefreshControl()
-//        obj.addTarget(me, action: #selector(me.refreshData), for: .valueChanged)
-//        return obj
-//    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupColletioView()
@@ -54,8 +47,7 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
     }
     
     func setupColletioView() {
-        //self.colletionView.addSubview(self.refreshControle)
-        self.colletionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: "CatalogoCollectionViewCell")
+        self.colletionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: "MovieCollectionViewCell")
         self.colletionView.delegate = self
         self.colletionView.dataSource = self
         self.view.addSubview(self.colletionView)
@@ -84,17 +76,6 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
             return UICollectionViewCell()
     }
     
-//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        let lastItemIndex = self.movies.count - 1
-//        if indexPath.row == lastItemIndex{
-//            print("chegou no fim")
-//            if !isFetchingData{
-//                isFetchingData = true
-//                movieViewModel.fetchMovies()
-//            }
-//        }
-//    }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset
         let bounds = scrollView.bounds
@@ -105,14 +86,8 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
         let reload_distance: CGFloat = 5.0
 
         if (y > (h + reload_distance)) && self.movies.count > 0 && !isFetchingData{
-            //isLoading = true
             isFetchingData = true
-//            if self.refreshControle.isRefreshing {
-//                return
-//            }
-            print("chgo no fim")
             movieViewModel.fetchMovies()
-            //viewModel.fetch(value: "", productFilter: .desc, offSet: self.products.count, groupID: self.data?.code ?? "")
         }
     }
 

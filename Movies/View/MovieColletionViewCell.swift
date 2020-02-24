@@ -33,12 +33,6 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     func config(movie: Movie) {
         self.movieImageView.image = UIImage(named: "multimedia_placeholder")
-//        self.imageTop.image = product.images.first ?? Constants().PLACEHOLDER_CELL
-//        self.titleLabel.text = product.desc
-//        self.subTitleLabel.text = product.code
-//        self.descLabel.text = product.info
-//        product.delegate = self
-//        self.product = product
     }
 
     
