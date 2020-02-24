@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol MovieViewModelProtocol {
     func didFinishFetch(with movies: [Movie])
@@ -40,4 +41,5 @@ class MovieViewModel {
         let repository = MovieRepository()
         return URL(string: repository.baseImageUrl + PosterSize.small.rawValue + (movie.poster_path ?? ""))
     }
+    
 }

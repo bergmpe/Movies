@@ -9,8 +9,8 @@ import UIKit
 
 class MovieCollectionViewCell: UICollectionViewCell {
     
-    lazy var movieImageView: UIImageView = {
-        let obj = UIImageView()
+    lazy var movieImageView: CachedUIImageView = {
+        let obj = CachedUIImageView()
         obj.translatesAutoresizingMaskIntoConstraints = false
         obj.contentMode = .scaleAspectFit
         obj.image = UIImage(named: "multimedia_placeholder")
@@ -19,6 +19,11 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     override func didMoveToSuperview() {
         self.setup()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.movieImageView.image = nil
     }
     
     private func setup() {

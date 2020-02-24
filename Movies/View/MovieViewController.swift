@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MovieViewController.swift
 //  Movies
 //
 //  Created by padrao on 21/02/20.
@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lottie
 
 class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -38,9 +39,19 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
         return obj
     }()
     
+    lazy var animationView: AnimationView = {
+        let obj = AnimationView()
+        let animation = Animation.named("rippleLoadingAnimation")
+        obj.animation = animation
+        obj.loopMode = .loop
+        obj.contentMode = .scaleAspectFit
+        return obj
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupColletioView()
+        setupAnimationView()
         setupNavBar()
         movieViewModel.delegate = self
         movieViewModel.fetchMovies()
@@ -57,6 +68,16 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
         self.colletionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
     }
     
+    func setupAnimationView(){
+        self.view.addSubview(animationView)
+        self.animationView.translatesAutoresizingMaskIntoConstraints = false
+        self.animationView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.animationView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        self.animationView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        self.animationView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        self.animationView.play()
+    }
+    
     func setupNavBar(){
         self.navigationItem.title = "Movies"
     }
@@ -68,6 +89,7 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell {
+            cell.movieImageView.image = UIImage(named: "multimedia_placeholder")
             if let posterUrl = movieViewModel.getPosterUrl(for: movies[indexPath.row]){
                 cell.movieImageView.load(url: posterUrl)
                     return cell
