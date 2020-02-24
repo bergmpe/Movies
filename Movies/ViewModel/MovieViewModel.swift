@@ -19,9 +19,10 @@ class MovieViewModel {
     
     func fetchMovies(){
         let repository = MovieRepository()
-        repository.getMovies(completionHandler: {
+        repository.getMovies(page: String(page), completionHandler: {
             movieDTO, errorDict in
-            if let movies = movieDTO?.results{
+            if let _movieDTO = movieDTO, let movies = _movieDTO.results{
+                self.page = (_movieDTO.page ?? self.page) + 1
                 self.delegate?.didFinishFetch(with: movies)
             }
             else{

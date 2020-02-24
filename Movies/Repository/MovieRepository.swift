@@ -11,9 +11,9 @@ import Foundation
 
 class MovieRepository: Repository{
     
-    func getMovies(completionHandler: @escaping (_ moviePage: MovieDTO?, _ error: [String:AnyObject]?) -> Void){
+    func getMovies(page: String, completionHandler: @escaping (_ moviePage: MovieDTO?, _ error: [String:AnyObject]?) -> Void){
         if var urlComponents = URLComponents(string: baseUrl + "discover/movie") {
-            urlComponents.queryItems = [URLQueryItem(name: "api_key", value: TmdbApiKey), URLQueryItem(name: "language", value: "pt-BR")]
+            urlComponents.queryItems = [URLQueryItem(name: "api_key", value: TmdbApiKey), URLQueryItem(name: "language", value: "pt-BR"), URLQueryItem(name: "page", value: page)]
         guard let url = urlComponents.url
             else { return }
         

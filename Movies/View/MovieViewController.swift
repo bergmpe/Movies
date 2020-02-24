@@ -18,6 +18,7 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
             }
         }
     }
+    var isFetchingData = false
     
     lazy var flowLayout: UICollectionViewFlowLayout = { [weak self] in
         let _flowLayout = UICollectionViewFlowLayout()
@@ -46,14 +47,10 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         setupColletioView()
         setupNavBar()
         movieViewModel.delegate = self
         movieViewModel.fetchMovies()
-        
-//        let service = MovieRepository()
-//        service.getMovies()
     }
     
     func setupColletioView() {
@@ -87,10 +84,42 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
             return UICollectionViewCell()
     }
     
+//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        let lastItemIndex = self.movies.count - 1
+//        if indexPath.row == lastItemIndex{
+//            print("chegou no fim")
+//            if !isFetchingData{
+//                isFetchingData = true
+//                movieViewModel.fetchMovies()
+//            }
+//        }
+//    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset
+        let bounds = scrollView.bounds
+        let size = scrollView.contentSize
+        let inset = scrollView.contentInset
+        let y = offset.y + bounds.size.height - inset.bottom
+        let h = size.height
+        let reload_distance: CGFloat = 5.0
+
+        if (y > (h + reload_distance)) && self.movies.count > 0 && !isFetchingData{
+            //isLoading = true
+            isFetchingData = true
+//            if self.refreshControle.isRefreshing {
+//                return
+//            }
+            print("chgo no fim")
+            movieViewModel.fetchMovies()
+            //viewModel.fetch(value: "", productFilter: .desc, offSet: self.products.count, groupID: self.data?.code ?? "")
+        }
+    }
+
     //MARK: MovieViewModelProtocol
     func didFinishFetch(with movies: [Movie]) {
-        print(movies)
-        self.movies = movies
+        isFetchingData = false
+        self.movies.append(contentsOf: movies)
     }
 
 
