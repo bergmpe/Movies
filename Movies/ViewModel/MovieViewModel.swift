@@ -35,4 +35,9 @@ class MovieViewModel {
             }
         })
     }
+    
+    func getPosterUrl(for movie: Movie) -> URL?{
+        let repository = MovieRepository()
+        return URL(string: repository.baseImageUrl + PosterSize.small.rawValue + (movie.poster_path ?? ""))
+    }
 }

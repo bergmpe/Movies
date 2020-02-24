@@ -13,6 +13,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         let obj = UIImageView()
         obj.translatesAutoresizingMaskIntoConstraints = false
         obj.contentMode = .scaleAspectFit
+        obj.image = UIImage(named: "multimedia_placeholder")
         return obj
     }()
     
@@ -30,11 +31,6 @@ class MovieCollectionViewCell: UICollectionViewCell {
         self.movieImageView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
         self.movieImageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
     }
-    
-    func config(movie: Movie) {
-        self.movieImageView.image = UIImage(named: "multimedia_placeholder")
-    }
-
     
 }
 
