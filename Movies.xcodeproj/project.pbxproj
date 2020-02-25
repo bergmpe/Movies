@@ -26,7 +26,7 @@
 		9746FD112401579B00502F3E /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9746FD102401579B00502F3E /* MovieViewModel.swift */; };
 		9746FD1324015C4400502F3E /* MovieDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9746FD1224015C4400502F3E /* MovieDTO.swift */; };
 		9746FD152402087300502F3E /* MovieColletionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9746FD142402087300502F3E /* MovieColletionViewCell.swift */; };
-		97D7711924040FD4002D0A0F /* rippleLoadingAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 97D7711824040FD4002D0A0F /* rippleLoadingAnimation.json */; };
+		97D7711B24048BD6002D0A0F /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 97D7711A24048BD6002D0A0F /* loading.json */; };
 		CF19213BED34E4ABA780699E /* Pods_Movies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D83522C7CD4DD806B16154A /* Pods_Movies.framework */; };
 /* End PBXBuildFile section */
 
@@ -75,7 +75,7 @@
 		9746FD102401579B00502F3E /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		9746FD1224015C4400502F3E /* MovieDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDTO.swift; sourceTree = "<group>"; };
 		9746FD142402087300502F3E /* MovieColletionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieColletionViewCell.swift; sourceTree = "<group>"; };
-		97D7711824040FD4002D0A0F /* rippleLoadingAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = rippleLoadingAnimation.json; sourceTree = "<group>"; };
+		97D7711A24048BD6002D0A0F /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		B2978EE305FF0667C400A152 /* Pods-Movies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movies.release.xcconfig"; path = "Target Support Files/Pods-Movies/Pods-Movies.release.xcconfig"; sourceTree = "<group>"; };
 		D44D3DF6CD698CBC8CAE968C /* Pods_MoviesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoviesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC523115B9D4962F8D952868 /* Pods-MoviesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoviesTests.release.xcconfig"; path = "Target Support Files/Pods-MoviesTests/Pods-MoviesTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -249,7 +249,7 @@
 		97D7711724040FAB002D0A0F /* Json */ = {
 			isa = PBXGroup;
 			children = (
-				97D7711824040FD4002D0A0F /* rippleLoadingAnimation.json */,
+				97D7711A24048BD6002D0A0F /* loading.json */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -364,7 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9746FCE22400717200502F3E /* LaunchScreen.storyboard in Resources */,
-				97D7711924040FD4002D0A0F /* rippleLoadingAnimation.json in Resources */,
+				97D7711B24048BD6002D0A0F /* loading.json in Resources */,
 				9746FCDF2400717200502F3E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

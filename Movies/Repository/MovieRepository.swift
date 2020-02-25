@@ -12,7 +12,7 @@ import UIKit
 
 class MovieRepository: Repository{
         
-    func getMovies(page: String, completionHandler: @escaping (_ moviePage: MovieDTO?, _ error: [String:AnyObject]?) -> Void){
+    func getMovies(page: String, completionHandler: @escaping (_ moviePage: MovieDTO?, _ error: [String:String]?) -> Void){
         if var urlComponents = URLComponents(string: baseUrl + "discover/movie") {
             urlComponents.queryItems = [URLQueryItem(name: "api_key", value: TmdbApiKey), URLQueryItem(name: "language", value: "pt-BR"), URLQueryItem(name: "page", value: page)]
         guard let url = urlComponents.url
@@ -20,12 +20,15 @@ class MovieRepository: Repository{
         
             let dataTask = URLSession.shared.dataTask(with: url, completionHandler: {
                 data, response, error in
+                if let _error = error{
+                    return completionHandler(nil, ["erro": _error.localizedDescription])
+                }
                 if let _data = data{
                     do {
                         let moviePage = try JSONDecoder().decode( MovieDTO.self, from: _data)
                         completionHandler(moviePage,nil)
-                    } catch let error as NSError {
-                        print("Failed to load: \(error)")
+                    } catch{
+                        completionHandler(nil, ["erro": "Falha ao decodificar a resposta."])
                     }
                 }
             })

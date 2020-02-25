@@ -41,7 +41,7 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
     
     lazy var animationView: AnimationView = {
         let obj = AnimationView()
-        let animation = Animation.named("rippleLoadingAnimation")
+        let animation = Animation.named("loading")
         obj.animation = animation
         obj.loopMode = .loop
         obj.contentMode = .scaleAspectFit
@@ -75,7 +75,6 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
         self.animationView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         self.animationView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         self.animationView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        self.animationView.play()
     }
     
     func setupNavBar(){
@@ -114,9 +113,26 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
     }
 
     //MARK: MovieViewModelProtocol
+    func didStartFetch() {
+        self.animationView.play()
+    }
+    
     func didFinishFetch(with movies: [Movie]) {
         isFetchingData = false
         self.movies.append(contentsOf: movies)
+        DispatchQueue.main.async {
+            self.animationView.stop()
+        }
+    }
+    
+    func didFinishFetchWithError(message: String) {
+        DispatchQueue.main.async {
+            self.animationView.stop()
+            let alert = UIAlertController(title: "Atenção", message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
 

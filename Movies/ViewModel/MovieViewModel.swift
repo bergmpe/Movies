@@ -11,6 +11,8 @@ import UIKit
 
 protocol MovieViewModelProtocol {
     func didFinishFetch(with movies: [Movie])
+    func didFinishFetchWithError(message: String)
+    func didStartFetch()
 }
 
 class MovieViewModel {
@@ -20,6 +22,7 @@ class MovieViewModel {
     
     func fetchMovies(){
         let repository = MovieRepository()
+        delegate?.didStartFetch()
         repository.getMovies(page: String(page), completionHandler: {
             movieDTO, errorDict in
             if let _movieDTO = movieDTO, let movies = _movieDTO.results{
@@ -28,10 +31,10 @@ class MovieViewModel {
             }
             else{
                 if let _errorDict = errorDict, let statusMessage = _errorDict["status_message"] as? String{
-                    //completionHandler([],statusMessage)
+                    self.delegate?.didFinishFetchWithError(message: statusMessage)
                 }
                 else{
-                    //completionHandler([],"Error ao obter a lista de filmes. Verifique sua conexão com a internet.")
+                    self.delegate?.didFinishFetchWithError(message: "Erro ao obter a lista de filmes. Verifique sua conexão com a internet.")
                 }
             }
         })
