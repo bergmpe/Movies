@@ -48,16 +48,35 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
         return obj
     }()
     
+    lazy var adviseLabel: UILabel = {
+        let obj = UILabel()
+        obj.text = "Falha ao carregar lista de filmes."
+        obj.isHidden = true
+        obj.textColor = .white
+        return obj
+    }()
+    
+    lazy var retryButton: UIButton = {
+        [weak self] in
+        let obj = UIButton()
+        obj.setTitle("Tentar Novamente", for: .normal)
+        obj.addTarget(self, action: #selector(self?.retryAction), for: .touchUpInside)
+        obj.isHidden = true
+        obj.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        obj.layer.cornerRadius = 10
+        obj.backgroundColor = .blue
+        return obj
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupColletioView()
-        setupAnimationView()
+        setupSubviews()
         setupNavBar()
         movieViewModel.delegate = self
         movieViewModel.fetchMovies()
     }
     
-    func setupColletioView() {
+    func setupSubviews(){
         self.colletionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: "MovieCollectionViewCell")
         self.colletionView.delegate = self
         self.colletionView.dataSource = self
@@ -66,19 +85,32 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
         self.colletionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -2).isActive = true
         self.colletionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
         self.colletionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
-    }
-    
-    func setupAnimationView(){
+        
+        self.view.addSubview(adviseLabel)
+        self.adviseLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.adviseLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.adviseLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        
         self.view.addSubview(animationView)
         self.animationView.translatesAutoresizingMaskIntoConstraints = false
         self.animationView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         self.animationView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         self.animationView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         self.animationView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        self.view.addSubview(retryButton)
+        self.retryButton.translatesAutoresizingMaskIntoConstraints = false
+        self.retryButton.topAnchor.constraint(equalTo: self.adviseLabel.bottomAnchor, constant: 20).isActive = true
+        self.retryButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.retryButton.widthAnchor.constraint(equalToConstant: 250).isActive = true
     }
     
     func setupNavBar(){
         self.navigationItem.title = "Movies"
+    }
+    
+    @objc func retryAction(sender: UIButton){
+        self.movieViewModel.fetchMovies()
     }
     
     //MARK: UICollectionViewDataSource
@@ -111,9 +143,21 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
             movieViewModel.fetchMovies()
         }
     }
+    
+    /// it shows the advice label and the retry button when fails get movies from server.
+    func showAdviceView(){
+        self.adviseLabel.isHidden = false
+        self.retryButton.isHidden = false
+    }
+    
+    func hideAdviceView(){
+        self.adviseLabel.isHidden = true
+        self.retryButton.isHidden = true
+    }
 
     //MARK: MovieViewModelProtocol
     func didStartFetch() {
+        self.hideAdviceView()
         self.animationView.play()
     }
     
@@ -132,6 +176,7 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil)
+            self.showAdviceView()
         }
     }
 

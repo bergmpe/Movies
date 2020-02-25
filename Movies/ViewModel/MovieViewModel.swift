@@ -30,7 +30,7 @@ class MovieViewModel {
                 self.delegate?.didFinishFetch(with: movies)
             }
             else{
-                if let _errorDict = errorDict, let statusMessage = _errorDict["status_message"] as? String{
+                if let _errorDict = errorDict, let statusMessage = _errorDict["status_message"]{
                     self.delegate?.didFinishFetchWithError(message: statusMessage)
                 }
                 else{
