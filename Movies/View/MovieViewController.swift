@@ -183,7 +183,6 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
         self.hideAdviceView()
         self.animationView.play()
         self.showLoadingView()
-        print("comecou")
     }
     
     func didFinishFetch(with movies: [Movie]) {
@@ -192,7 +191,6 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
         DispatchQueue.main.async {
             self.hideLoadingView()
             self.animationView.stop()
-            print("terminou")
         }
     }
     

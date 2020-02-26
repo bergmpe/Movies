@@ -21,17 +21,19 @@ class CachedUIImageView: UIImageView{
             self.image = image
         }
         else{
-            DispatchQueue.global().async {
-                [weak self] in
-                if let data = try? Data(contentsOf: url){
-                    if let image = UIImage(data: data){
-                        self?.imageCache.setObject(image, forKey: url.absoluteString as NSString)
-                        DispatchQueue.main.async {
-                            self?.image = image
+            dataTask?.cancel()
+            dataTask = URLSession.shared.dataTask(with: url, completionHandler: {
+                [weak self] data, response, error in
+                if let _data = data{
+                        if let image = UIImage(data: _data){
+                            self?.imageCache.setObject(image, forKey: url.absoluteString as NSString)
+                            DispatchQueue.main.async {
+                                self?.image = image
+                            }
                         }
-                    }
                 }
-            }
+            })
+            dataTask?.resume()
         }
     }
     
