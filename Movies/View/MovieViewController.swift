@@ -28,7 +28,7 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
         let _flowLayout = UICollectionViewFlowLayout()
         let width = ((self?.view.bounds.width ?? 200) / 2) - 6
         _flowLayout.itemSize = CGSize(width: width, height: width * 1.5)
-        _flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 5)
+        _flowLayout.sectionInset = UIEdgeInsets(top: 6, left: 3, bottom: 0, right: 3)
         _flowLayout.scrollDirection = UICollectionView.ScrollDirection.vertical
         _flowLayout.minimumInteritemSpacing = 0.0
         return _flowLayout
