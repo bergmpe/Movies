@@ -126,7 +126,7 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell {
             cell.movieImageView.image = UIImage(named: "multimedia_placeholder")
-            if let posterUrl = movieViewModel.getPosterUrl(for: movies[indexPath.row]){
+            if let posterUrl = movieViewModel.posterUrl(for: movies[indexPath.row]){
                 cell.movieImageView.load(url: posterUrl)
                     return cell
                 }

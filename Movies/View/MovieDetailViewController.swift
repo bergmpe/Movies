@@ -207,7 +207,7 @@ class MovieDetailViewController: UIViewController, DetailMovieViewModelDelegate 
     }
     
     func getBackdropImage(){
-        if let backdropUrl = detailMovieViewModel?.getBackdropPathUrl(){
+        if let backdropUrl = detailMovieViewModel?.backdropPathUrl(){
             self.backdropMovieImageView.load(url: backdropUrl)
         }
     }

@@ -31,12 +31,12 @@ class DetailMovieViewModel{
         self.movie = movie
     }
     
-    func getPosterUrl() -> URL?{
+    func posterUrl() -> URL?{
         let repository = MovieRepository()
         return URL(string: repository.baseImageUrl + PosterSize.small.rawValue + (movie.poster_path ?? ""))
     }
     
-    func getBackdropPathUrl() -> URL?{
+    func backdropPathUrl() -> URL?{
         let repository = MovieRepository()
         return URL(string: repository.baseImageUrl + BackdropSize.small.rawValue + (movie.backdrop_path ?? ""))
     }
