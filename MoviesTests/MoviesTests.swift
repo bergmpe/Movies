@@ -19,11 +19,23 @@ class MoviesTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testDetailMovieViewModelPostUrl() {
+        let movie = Movie(id: nil, adult: nil, backdrop_path: nil, poster_path: nil, overview: nil, genre_ids: nil, original_language: nil, original_title: nil, popularity: nil, release_date: nil, video: nil, title: nil, vote_average: 6.8, vote_count: 30)
+        let repository = MovieRepository()
+        let detailViewModel = DetailMovieViewModel(movie: movie)
+        
+        XCTAssertEqual(detailViewModel.posterUrl(), URL(string:repository.baseImageUrl + PosterSize.small.rawValue + (movie.poster_path ?? "")))
     }
 
+    func testDetailMovieViewModelBackdropPathUrl() {
+        let movie = Movie(id: nil, adult: nil, backdrop_path: nil, poster_path: nil, overview: nil, genre_ids: nil, original_language: nil, original_title: nil, popularity: nil, release_date: nil, video: nil, title: nil, vote_average: 6.8, vote_count: 30)
+        let repository = MovieRepository()
+        let detailViewModel = DetailMovieViewModel(movie: movie)
+        
+        XCTAssertEqual(detailViewModel.backdropPathUrl(), URL(string: repository.baseImageUrl + BackdropSize.small.rawValue + (movie.backdrop_path ?? "")))
+    }
+
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
