@@ -92,12 +92,12 @@ class DetailMovieViewModel{
     
     private func getVote(from dictionary: [String: Any]) -> String{
         var vote = ""
-        if let voteAverage = dictionary["vote_average"] as? Double{
+        if let voteAverage = dictionary["vote_average"] as? Double, let voteCount = dictionary["vote_count"]{
             let voteAverageTrucated = Int(voteAverage / 2)
             for _ in 1...voteAverageTrucated{
                 vote += "⭐️ "
             }
-            return "Nota: " + vote + "(\(voteAverage))"
+            return "Nota: " + vote + "(\(voteAverage)). " + "Número total de votos (\(voteCount))."
         }
         else{
             return "Nota: -"

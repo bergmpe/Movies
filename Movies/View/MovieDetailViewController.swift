@@ -266,5 +266,4 @@ class MovieDetailViewController: UIViewController, DetailMovieViewModelDelegate 
         self.animationView.play()
         self.showLoadingView()
     }
-
 }
