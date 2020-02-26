@@ -32,12 +32,6 @@ class MovieDetailViewController: UIViewController, DetailMovieViewModelDelegate 
         return obj
     }()
     
-    lazy var contentView: UIView = {
-        let obj = UIView()
-        obj.translatesAutoresizingMaskIntoConstraints = false
-        return obj
-    }()
-    
     lazy var titleLabel: UILabel = {
         let obj = UILabel()
         obj.translatesAutoresizingMaskIntoConstraints = false
