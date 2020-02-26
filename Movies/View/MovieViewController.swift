@@ -129,6 +129,12 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
             return UICollectionViewCell()
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailMovieViewController = MovieDetailViewController()
+        detailMovieViewController.detailMovieViewModel = DetailMovieViewModel( movie: movies[indexPath.row])
+        self.navigationController?.pushViewController(detailMovieViewController, animated: true)
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset
         let bounds = scrollView.bounds
@@ -179,7 +185,5 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
             self.showAdviceView()
         }
     }
-
-
 }
 
