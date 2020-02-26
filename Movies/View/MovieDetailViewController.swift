@@ -140,37 +140,36 @@ class MovieDetailViewController: UIViewController, DetailMovieViewModelDelegate 
         self.scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         self.scrollView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
         
-        
         self.scrollView.addSubview(titleLabel)
-        self.titleLabel.leftAnchor.constraint(equalTo: self.scrollView.leftAnchor, constant: 5).isActive = true
-        self.titleLabel.rightAnchor.constraint(equalTo: self.scrollView.rightAnchor, constant: -5).isActive = true
-        self.titleLabel.widthAnchor.constraint(equalToConstant: self.view.frame.width - 10).isActive = true
-        self.titleLabel.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 10).isActive = true
+        self.titleLabel.leftAnchor.constraint(equalTo: self.scrollView.leftAnchor, constant: horizontalMargin).isActive = true
+        self.titleLabel.rightAnchor.constraint(equalTo: self.scrollView.rightAnchor, constant: -horizontalMargin).isActive = true
+        self.titleLabel.widthAnchor.constraint(equalToConstant: self.view.frame.width - verticalMargin).isActive = true
+        self.titleLabel.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: verticalMargin).isActive = true
         
         self.scrollView.addSubview(overviewLabel)
-        self.overviewLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 5).isActive = true
-        self.overviewLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -5).isActive = true
-        self.overviewLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10).isActive = true
+        self.overviewLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: horizontalMargin).isActive = true
+        self.overviewLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -horizontalMargin).isActive = true
+        self.overviewLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: verticalMargin).isActive = true
 
         self.scrollView.addSubview(genresLabel)
-        self.genresLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 5).isActive = true
-        self.genresLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -5).isActive = true
-        self.genresLabel.topAnchor.constraint(equalTo: self.overviewLabel.bottomAnchor, constant: 10).isActive = true
+        self.genresLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: horizontalMargin).isActive = true
+        self.genresLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -horizontalMargin).isActive = true
+        self.genresLabel.topAnchor.constraint(equalTo: self.overviewLabel.bottomAnchor, constant: verticalMargin).isActive = true
 
         self.scrollView.addSubview(releaseYearLabel)
-        self.releaseYearLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 5).isActive = true
-        self.releaseYearLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -5).isActive = true
-        self.releaseYearLabel.topAnchor.constraint(equalTo: self.genresLabel.bottomAnchor, constant: 10).isActive = true
+        self.releaseYearLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: horizontalMargin).isActive = true
+        self.releaseYearLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -horizontalMargin).isActive = true
+        self.releaseYearLabel.topAnchor.constraint(equalTo: self.genresLabel.bottomAnchor, constant: verticalMargin).isActive = true
 
         self.scrollView.addSubview(productionCompaniesLabel)
-        self.productionCompaniesLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 5).isActive = true
-        self.productionCompaniesLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -5).isActive = true
-        self.productionCompaniesLabel.topAnchor.constraint(equalTo: self.releaseYearLabel.bottomAnchor, constant: 10).isActive = true
+        self.productionCompaniesLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: horizontalMargin).isActive = true
+        self.productionCompaniesLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -horizontalMargin).isActive = true
+        self.productionCompaniesLabel.topAnchor.constraint(equalTo: self.releaseYearLabel.bottomAnchor, constant: verticalMargin).isActive = true
 
         self.scrollView.addSubview(voteLabel)
-        self.voteLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 5).isActive = true
-        self.voteLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -5).isActive = true
-        self.voteLabel.topAnchor.constraint(equalTo: self.productionCompaniesLabel.bottomAnchor, constant: 10).isActive = true
+        self.voteLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: horizontalMargin).isActive = true
+        self.voteLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -horizontalMargin).isActive = true
+        self.voteLabel.topAnchor.constraint(equalTo: self.productionCompaniesLabel.bottomAnchor, constant: verticalMargin).isActive = true
         
         self.view.addSubview(adviseLabel)
         self.adviseLabel.translatesAutoresizingMaskIntoConstraints = false
