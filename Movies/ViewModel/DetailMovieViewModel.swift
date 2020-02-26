@@ -65,7 +65,6 @@ class DetailMovieViewModel{
                         self?.detailMovieDelegate?.didFinishFetchWithError(message: "Erro ao obter os detalhes do filmes. Verifique sua conexão com a internet.")
                     }
                 }
-                print(movieDetailDict)
             })
         
         }

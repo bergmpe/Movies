@@ -21,6 +21,9 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
     }
     var isFetchingData = false
     
+    var animationViewHeightConstraint: NSLayoutConstraint?
+    var animationViewWidthConstraint: NSLayoutConstraint?
+
     lazy var flowLayout: UICollectionViewFlowLayout = { [weak self] in
         let _flowLayout = UICollectionViewFlowLayout()
         let width = ((self?.view.bounds.width ?? 200) / 2) - 6
@@ -95,8 +98,10 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
         self.animationView.translatesAutoresizingMaskIntoConstraints = false
         self.animationView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         self.animationView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        self.animationView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        self.animationView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        self.animationViewHeightConstraint =  self.animationView.heightAnchor.constraint(equalToConstant: 0)
+        self.animationViewWidthConstraint =  self.animationView.widthAnchor.constraint(equalToConstant: 0)
+        self.animationViewHeightConstraint?.isActive = true
+        self.animationViewWidthConstraint?.isActive = true
         
         self.view.addSubview(retryButton)
         self.retryButton.translatesAutoresizingMaskIntoConstraints = false
@@ -160,23 +165,40 @@ class MovieViewController: UIViewController, MovieViewModelProtocol, UICollectio
         self.adviseLabel.isHidden = true
         self.retryButton.isHidden = true
     }
+    
+    func showLoadingView(){
+        self.animationViewHeightConstraint?.constant = 200
+        self.animationViewWidthConstraint?.constant = 200
+        self.view.layoutIfNeeded()
+    }
+    
+    func hideLoadingView(){
+        self.animationViewHeightConstraint?.constant = 0
+        self.animationViewWidthConstraint?.constant = 0
+        self.view.layoutIfNeeded()
+    }
 
     //MARK: MovieViewModelProtocol
     func didStartFetch() {
         self.hideAdviceView()
         self.animationView.play()
+        self.showLoadingView()
+        print("comecou")
     }
     
     func didFinishFetch(with movies: [Movie]) {
         isFetchingData = false
         self.movies.append(contentsOf: movies)
         DispatchQueue.main.async {
+            self.hideLoadingView()
             self.animationView.stop()
+            print("terminou")
         }
     }
     
     func didFinishFetchWithError(message: String) {
         DispatchQueue.main.async {
+            self.hideLoadingView()
             self.animationView.stop()
             let alert = UIAlertController(title: "Atenção", message: message, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)

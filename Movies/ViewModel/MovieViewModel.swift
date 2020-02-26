@@ -24,17 +24,17 @@ class MovieViewModel {
         let repository = MovieRepository()
         delegate?.didStartFetch()
         repository.getMovies(page: String(page), completionHandler: {
-            movieDTO, errorDict in
+            [weak self] movieDTO, errorDict in
             if let _movieDTO = movieDTO, let movies = _movieDTO.results{
-                self.page = (_movieDTO.page ?? self.page) + 1
-                self.delegate?.didFinishFetch(with: movies)
+                self?.page = (_movieDTO.page ?? self!.page) + 1
+                self?.delegate?.didFinishFetch(with: movies)
             }
             else{
                 if let _errorDict = errorDict, let statusMessage = _errorDict["status_message"]{
-                    self.delegate?.didFinishFetchWithError(message: statusMessage)
+                    self?.delegate?.didFinishFetchWithError(message: statusMessage)
                 }
                 else{
-                    self.delegate?.didFinishFetchWithError(message: "Erro ao obter a lista de filmes. Verifique sua conexão com a internet.")
+                    self?.delegate?.didFinishFetchWithError(message: "Erro ao obter a lista de filmes. Verifique sua conexão com a internet.")
                 }
             }
         })
