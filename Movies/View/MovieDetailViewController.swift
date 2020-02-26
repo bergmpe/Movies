@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import Lottie
 
 class MovieDetailViewController: UIViewController, DetailMovieViewModelDelegate {
     
     var detailMovieViewModel: DetailMovieViewModel?
     let verticalMargin:CGFloat = 10
     let horizontalMargin:CGFloat = 5
+    
+    var animationViewHeightConstraint: NSLayoutConstraint?
+    var animationViewWidthConstraint: NSLayoutConstraint?
     
     lazy var backdropMovieImageView: CachedUIImageView = {
         let obj = CachedUIImageView()
@@ -79,22 +83,46 @@ class MovieDetailViewController: UIViewController, DetailMovieViewModelDelegate 
         let obj = UILabel()
         obj.translatesAutoresizingMaskIntoConstraints = false
         obj.textColor = .white
-        obj.text = "Nota: ⭐️\t número de votos: 682."
         obj.numberOfLines = 0
         return obj
     }()
     
-    
+    lazy var animationView: AnimationView = {
+           let obj = AnimationView()
+           let animation = Animation.named("loading")
+           obj.animation = animation
+           obj.loopMode = .loop
+           obj.contentMode = .scaleAspectFit
+           return obj
+       }()
+       
+       lazy var adviseLabel: UILabel = {
+           let obj = UILabel()
+           obj.text = "Falha ao carregar detalhes do filmes."
+           obj.isHidden = true
+           obj.textColor = .white
+           return obj
+       }()
+       
+       lazy var retryButton: UIButton = {
+           [weak self] in
+           let obj = UIButton()
+           obj.setTitle("Tentar Novamente", for: .normal)
+           obj.addTarget(self, action: #selector(self?.retryAction), for: .touchUpInside)
+           obj.isHidden = true
+           obj.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+           obj.layer.cornerRadius = 10
+           obj.backgroundColor = .blue
+           return obj
+       }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .black
         self.setupSubViews()
-        if let backdropUrl = detailMovieViewModel?.getBackdropPathUrl(){
-            self.backdropMovieImageView.load(url: backdropUrl)
-        }
-        detailMovieViewModel?.detailMovieDelegate = self
-        detailMovieViewModel?.fetchDetail()
+        self.getBackdropImage()
+        self.detailMovieViewModel?.detailMovieDelegate = self
+        self.detailMovieViewModel?.fetchDetail()
     }
     
     func setupSubViews(){
@@ -143,6 +171,26 @@ class MovieDetailViewController: UIViewController, DetailMovieViewModelDelegate 
         self.voteLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 5).isActive = true
         self.voteLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -5).isActive = true
         self.voteLabel.topAnchor.constraint(equalTo: self.productionCompaniesLabel.bottomAnchor, constant: 10).isActive = true
+        
+        self.view.addSubview(adviseLabel)
+        self.adviseLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.adviseLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.adviseLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        
+        self.view.addSubview(animationView)
+        self.animationView.translatesAutoresizingMaskIntoConstraints = false
+        self.animationView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.animationView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        self.animationViewHeightConstraint =  self.animationView.heightAnchor.constraint(equalToConstant: 0)
+        self.animationViewWidthConstraint =  self.animationView.widthAnchor.constraint(equalToConstant: 0)
+        self.animationViewHeightConstraint?.isActive = true
+        self.animationViewWidthConstraint?.isActive = true
+        
+        self.view.addSubview(retryButton)
+        self.retryButton.translatesAutoresizingMaskIntoConstraints = false
+        self.retryButton.topAnchor.constraint(equalTo: self.adviseLabel.bottomAnchor, constant: 20).isActive = true
+        self.retryButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.retryButton.widthAnchor.constraint(equalToConstant: 250).isActive = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -154,6 +202,40 @@ class MovieDetailViewController: UIViewController, DetailMovieViewModelDelegate 
         self.scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: scrollViewContentHeight)
     }
     
+    @objc func retryAction(sender: UIButton){
+        self.detailMovieViewModel?.fetchDetail()
+        self.getBackdropImage()
+    }
+    
+    func getBackdropImage(){
+        if let backdropUrl = detailMovieViewModel?.getBackdropPathUrl(){
+            self.backdropMovieImageView.load(url: backdropUrl)
+        }
+    }
+    
+    /// it shows the advice label and the retry button when fails get movies from server.
+    func showAdviceView(){
+        self.adviseLabel.isHidden = false
+        self.retryButton.isHidden = false
+    }
+    
+    func hideAdviceView(){
+        self.adviseLabel.isHidden = true
+        self.retryButton.isHidden = true
+    }
+    
+    func showLoadingView(){
+        self.animationViewHeightConstraint?.constant = 200
+        self.animationViewWidthConstraint?.constant = 200
+        self.view.layoutIfNeeded()
+    }
+    
+    func hideLoadingView(){
+        self.animationViewHeightConstraint?.constant = 0
+        self.animationViewWidthConstraint?.constant = 0
+        self.view.layoutIfNeeded()
+    }
+    
     func didFinishFetch() {
         DispatchQueue.main.async {
             self.titleLabel.text = self.detailMovieViewModel?.title
@@ -163,15 +245,27 @@ class MovieDetailViewController: UIViewController, DetailMovieViewModelDelegate 
             self.productionCompaniesLabel.text = self.detailMovieViewModel?.productionCompanies
             self.voteLabel.text = self.detailMovieViewModel?.vote
             self.scrollView.layoutIfNeeded()
+            self.hideLoadingView()
+            self.animationView.stop()
         }
     }
     
     func didFinishFetchWithError(message: String) {
-        
+        DispatchQueue.main.async {
+            self.hideLoadingView()
+            self.animationView.stop()
+            let alert = UIAlertController(title: "Atenção", message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+            self.showAdviceView()
+        }
     }
     
     func didStartFetch() {
-        
+        self.hideAdviceView()
+        self.animationView.play()
+        self.showLoadingView()
     }
 
 }
